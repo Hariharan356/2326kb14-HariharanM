@@ -1,0 +1,66 @@
+mysql> create table student (
+    -> studentid int primary key,
+    -> studentname varchar(50)
+    -> );
+query ok, 0 rows affected (0.01 sec)
+
+mysql> create table course (
+    -> courseid varchar(10) primary key,
+    -> coursename varchar(50),
+    -> instructor varchar(50)
+    -> );
+query ok, 0 rows affected (0.01 sec)
+
+mysql> create table enrollment (
+    -> studentid int,
+    -> courseid varchar(10),
+    -> primary key (studentid, courseid),
+    -> foreign key (studentid) references student(studentid),
+    -> foreign key (courseid) references course(courseid)
+    -> );
+query ok, 0 rows affected (0.01 sec)
+
+mysql> insert into student values
+    -> (1, 'Arjun'),
+    -> (2, 'Sneha'),
+    -> (3, 'Ravi');
+query ok, 3 rows affected (0.01 sec)
+
+mysql> insert into course values
+    -> ('c201', 'datastructures', 'Meena'),
+    -> ('c202', 'web development', 'Rajesh');
+query ok, 2 rows affected (0.01 sec)
+
+mysql> insert into enrollment values
+    -> (1, 'c201'),
+    -> (1, 'c202'),
+    -> (2, 'c202'),
+    -> (3, 'c201');
+query ok, 4 rows affected (0.01 sec)
+
+mysql> select * from student;
++-----------+-------------+
+| studentid | studentname |
++-----------+-------------+
+|         1 | Arjun       |
+|         2 | Sneha       |
+|         3 | Ravi        |
++-----------+-------------+
+
+mysql> select * from course;
++----------+------------------+------------+
+| courseid | coursename       | instructor |
++----------+------------------+------------+
+| c201     | datastructures   | Meena      |
+| c202     | web development  | Rajesh     |
++----------+------------------+------------+
+
+mysql> select * from enrollment;
++-----------+----------+
+| studentid | courseid |
++-----------+----------+
+|         1 | c201     |
+|         1 | c202     |
+|         2 | c202     |
+|         3 | c201     |
++-----------+----------+

@@ -1,0 +1,36 @@
+mysql> create table course (
+    -> courseid int primary key,
+    -> coursename varchar(50)
+    -> );
+
+mysql> insert into course values
+    -> (101, 'electronics and communication'),
+    -> (102, 'mechanical engineering'),
+    -> (103, 'artificial intelligence');
+
+mysql> create table student (
+    -> studentid int primary key,
+    -> studentname varchar(50),
+    -> courseid int,
+    -> foreign key (courseid) references course(courseid)
+    -> );
+
+mysql> insert into student values
+    -> (1, 'Arun', 101),
+    -> (2, 'Kavya', 102),
+    -> (3, 'Meena', 103),
+    -> (4, 'Suresh', 101),
+    -> (5, 'Rithik', 102);
+
+mysql> select c.courseid, c.coursename, count(s.studentid) as student_count
+    -> from course c
+    -> left join student s on c.courseid = s.courseid
+    -> group by c.courseid, c.coursename;
++----------+-----------------------------+----------------+
+| courseid | coursename                  | student_count  |
++----------+-----------------------------+----------------+
+|      101 | electronics and communication |            2 |
+|      102 | mechanical engineering       |            2 |
+|      103 | artificial intelligence      |            1 |
++----------+-----------------------------+----------------+
+3 rows in set (0.00 sec)

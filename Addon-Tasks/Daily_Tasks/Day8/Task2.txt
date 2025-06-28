@@ -1,0 +1,41 @@
+mysql> insert into course (courseid, coursename, duration) values
+    -> (101, 'artificial intelligence', '3 years'),
+    -> (102, 'cyber security', '3 years'),
+    -> (103, 'cloud computing', '4 years'),
+    -> (104, 'robotics engineering', '4 years'),
+    -> (105, 'embedded systems', '4 years');
+query ok, 5 rows affected (0.01 sec)
+records: 5  duplicates: 0  warnings: 0
+
+mysql> insert into student (studentid, studentname, marks, courseid) values
+    -> (1, 'Arun', 84, 101),
+    -> (2, 'Divya', 90, 102),
+    -> (3, 'Karthik', 77, 103),
+    -> (4, 'Bharathi', 89, 104),
+    -> (5, 'Sathish', 93, 105);
+query ok, 5 rows affected (0.01 sec)
+records: 5  duplicates: 0  warnings: 0
+
+mysql> select * from course;
++----------+-------------------------+----------+
+| courseid | coursename              | duration |
++----------+-------------------------+----------+
+|      101 | artificial intelligence | 3 years  |
+|      102 | cyber security          | 3 years  |
+|      103 | cloud computing         | 4 years  |
+|      104 | robotics engineering    | 4 years  |
+|      105 | embedded systems        | 4 years  |
++----------+-------------------------+----------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student;
++-----------+--------------+-------+----------+
+| studentid | studentname  | marks | courseid |
++-----------+--------------+-------+----------+
+|         1 | Arun         |    84 |      101 |
+|         2 | Divya        |    90 |      102 |
+|         3 | Karthik      |    77 |      103 |
+|         4 | Bharathi     |    89 |      104 |
+|         5 | Sathish      |    93 |      105 |
++-----------+--------------+-------+----------+
+5 rows in set (0.00 sec)

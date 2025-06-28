@@ -1,0 +1,109 @@
+mysql> create table course (
+    -> courseid int primary key,
+    -> coursename varchar(50),
+    -> duration varchar(20)
+    -> );
+query ok, 0 rows affected (0.02 sec)
+
+mysql> desc course;
++-----------+--------------+------+-----+---------+-------+
+| field     | type         | null | key | default | extra |
++-----------+--------------+------+-----+---------+-------+
+| courseid  | int          | NO   | PRI | NULL    |       |
+| coursename| varchar(50)  | YES  |     | NULL    |       |
+| duration  | varchar(20)  | YES  |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> create table student (
+    -> studentid int primary key,
+    -> studentname varchar(50),
+    -> marks int,
+    -> courseid int,
+    -> foreign key (courseid) references course(courseid)
+    -> );
+query ok, 0 rows affected (0.03 sec)
+
+mysql> desc student;
++------------+--------------+------+-----+---------+-------+
+| field      | type         | null | key | default | extra |
++------------+--------------+------+-----+---------+-------+
+| studentid  | int          | NO   | PRI | NULL    |       |
+| studentname| varchar(50)  | YES  |     | NULL    |       |
+| marks      | int          | YES  |     | NULL    |       |
+| courseid   | int          | YES  | MUL | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into course (courseid, coursename, duration) values
+    -> (201, 'data analytics', '2 years'),
+    -> (202, 'cyber security', '3 years'),
+    -> (203, 'cloud computing', '1.5 years'),
+    -> (204, 'ai and ml', '2 years'),
+    -> (205, 'iot technology', '2.5 years');
+query ok, 5 rows affected (0.01 sec)
+records: 5  duplicates: 0  warnings: 0
+
+mysql> insert into student (studentid, studentname, marks, courseid) values
+    -> (11, 'Arjun', 81, 201),
+    -> (12, 'Sneha', 89, 202),
+    -> (13, 'Rahul', 75, 203),
+    -> (14, 'Divya', 93, 204),
+    -> (15, 'Ravi', 87, 205);
+query ok, 5 rows affected (0.01 sec)
+records: 5  duplicates: 0  warnings: 0
+
+mysql> select * from course;
++----------+------------------+------------+
+| courseid | coursename       | duration   |
++----------+------------------+------------+
+|      201 | data analytics   | 2 years    |
+|      202 | cyber security   | 3 years    |
+|      203 | cloud computing  | 1.5 years  |
+|      204 | ai and ml        | 2 years    |
+|      205 | iot technology   | 2.5 years  |
++----------+------------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student;
++-----------+-------------+-------+----------+
+| studentid | studentname | marks | courseid |
++-----------+-------------+-------+----------+
+|        11 | Arjun       |    81 |      201 |
+|        12 | Sneha       |    89 |      202 |
+|        13 | Rahul       |    75 |      203 |
+|        14 | Divya       |    93 |      204 |
+|        15 | Ravi        |    87 |      205 |
++-----------+-------------+-------+----------+
+5 rows in set (0.00 sec)
+
+mysql> alter table course add fee int;
+query ok, 0 rows affected (0.02 sec)
+records: 0  duplicates: 0  warnings: 0
+
+mysql> desc course;
++-----------+--------------+------+-----+---------+-------+
+| field     | type         | null | key | default | extra |
++-----------+--------------+------+-----+---------+-------+
+| courseid  | int          | NO   | PRI | NULL    |       |
+| coursename| varchar(50)  | YES  |     | NULL    |       |
+| duration  | varchar(20)  | YES  |     | NULL    |       |
+| fee       | int          | YES  |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> update course set fee = 60000 where coursename = 'data analytics';
+query ok, 1 row affected (0.01 sec)
+rows matched: 1  changed: 1  warnings: 0
+
+mysql> select * from course;
++----------+------------------+------------+--------+
+| courseid | coursename       | duration   | fee    |
++----------+------------------+------------+--------+
+|      201 | data analytics   | 2 years    | 60000  |
+|      202 | cyber security   | 3 years    | NULL   |
+|      203 | cloud computing  | 1.5 years  | NULL   |
+|      204 | ai and ml        | 2 years    | NULL   |
+|      205 | iot technology   | 2.5 years  | NULL   |
++----------+------------------+------------+--------+
+5 rows in set (0.00 sec)

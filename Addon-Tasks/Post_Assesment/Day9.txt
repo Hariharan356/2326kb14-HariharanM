@@ -1,0 +1,59 @@
+mysql> create database library_system_3nf;
+query ok, 1 row affected (0.00 sec)
+
+mysql> use library_system_3nf;
+database changed
+
+mysql> create table author (
+    -> author_id int primary key auto_increment,
+    -> name varchar(50)
+);
+query ok, 0 rows affected (0.01 sec)
+
+mysql> create table publisher (
+    -> publisher_id int primary key auto_increment,
+    -> name varchar(50)
+);
+query ok, 0 rows affected (0.01 sec)
+
+mysql> create table book (
+    -> book_id int primary key auto_increment,
+    -> title varchar(100),
+    -> author_id int,
+    -> publisher_id int,
+    -> year_published year,
+    -> isbn varchar(20) unique,
+    -> foreign key (author_id) references author(author_id),
+    -> foreign key (publisher_id) references publisher(publisher_id)
+);
+query ok, 0 rows affected (0.02 sec)
+
+mysql> create table member (
+    -> member_id int primary key auto_increment,
+    -> name varchar(50),
+    -> email varchar(50) unique,
+    -> phone varchar(15),
+    -> join_date date
+);
+query ok, 0 rows affected (0.01 sec)
+
+mysql> create table staff (
+    -> staff_id int primary key auto_increment,
+    -> name varchar(50),
+    -> position varchar(30),
+    -> phone varchar(15)
+);
+query ok, 0 rows affected (0.01 sec)
+
+mysql> create table loan (
+    -> loan_id int primary key auto_increment,
+    -> book_id int,
+    -> member_id int,
+    -> staff_id int,
+    -> loan_date date,
+    -> return_date date,
+    -> foreign key (book_id) references book(book_id),
+    -> foreign key (member_id) references member(member_id),
+    -> foreign key (staff_id) references staff(staff_id)
+);
+query ok, 0 rows affected (0.01 sec)

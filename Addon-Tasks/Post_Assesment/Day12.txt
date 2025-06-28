@@ -1,0 +1,17 @@
+mysql> use college_registration;
+Database changed
+
+mysql> select department.name as department_name, student.name as student_name, 
+    -> course.course_name, course.credits, registration.registration_date
+    -> from registration
+    -> join student on registration.student_id = student.student_id
+    -> join course on registration.course_id = course.course_id
+    -> join department on student.department_id = department.department_id
+    -> order by department.name;
++------------------+--------------+-------------------+---------+------------------+
+| department_name  | student_name | course_name       | credits | registration_date|
++------------------+--------------+-------------------+---------+------------------+
+| biomaths         | Divya Sri    | accounting basics |       3 | 2025-06-16       |
+| computer science | Arun Kumar   | java programming  |       4 | 2025-06-15       |
++------------------+--------------+-------------------+---------+------------------+
+2 rows in set (0.00 sec)

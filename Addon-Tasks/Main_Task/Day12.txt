@@ -1,0 +1,130 @@
+mysql> create database multi_table_app;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use multi_table_app;
+Database changed
+
+-- author table
+mysql> create table author (
+    -> author_id int primary key auto_increment,
+    -> name varchar(50)
+);
+Query OK, 0 rows affected (0.01 sec)
+
+-- publisher table
+mysql> create table publisher (
+    -> publisher_id int primary key auto_increment,
+    -> name varchar(50)
+);
+Query OK, 0 rows affected (0.01 sec)
+
+-- book table
+mysql> create table book (
+    -> book_id int primary key auto_increment,
+    -> title varchar(100),
+    -> author_id int,
+    -> publisher_id int,
+    -> year_published year,
+    -> isbn varchar(20) unique,
+    -> foreign key (author_id) references author(author_id),
+    -> foreign key (publisher_id) references publisher(publisher_id)
+);
+Query OK, 0 rows affected (0.01 sec)
+
+-- member table
+mysql> create table member (
+    -> member_id int primary key auto_increment,
+    -> name varchar(50),
+    -> email varchar(50) unique,
+    -> phone varchar(15),
+    -> join_date date
+);
+Query OK, 0 rows affected (0.01 sec)
+
+-- staff table
+mysql> create table staff (
+    -> staff_id int primary key auto_increment,
+    -> name varchar(50),
+    -> position varchar(30),
+    -> phone varchar(15)
+);
+Query OK, 0 rows affected (0.01 sec)
+
+-- loan table
+mysql> create table loan (
+    -> loan_id int primary key auto_increment,
+    -> book_id int,
+    -> member_id int,
+    -> staff_id int,
+    -> loan_date date,
+    -> return_date date,
+    -> foreign key (book_id) references book(book_id),
+    -> foreign key (member_id) references member(member_id),
+    -> foreign key (staff_id) references staff(staff_id)
+);
+Query OK, 0 rows affected (0.01 sec)
+
+-- sample data
+
+mysql> insert into author (name) values ('Sujatha');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into publisher (name) values ('Kalachuvadu Publications');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into book (title, author_id, publisher_id, year_published, isbn)
+    -> values ('En Iniya Iyanthira', 1, 1, 2005, '9788179928332');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into member (name, email, phone, join_date)
+    -> values ('Karthik', 'karthik123@email.com', '9876543210', '2023-01-15');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into staff (name, position, phone)
+    -> values ('Geetha', 'Librarian', '9998877665');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into loan (book_id, member_id, staff_id, loan_date, return_date)
+    -> values (1, 1, 1, '2025-06-25', '2025-07-02');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select loan.loan_id, book.title, member.name, staff.name, loan.loan_date, loan.return_date
+    -> from loan
+    -> join book on loan.book_id = book.book_id
+    -> join member on loan.member_id = member.member_id
+    -> join staff on loan.staff_id = staff.staff_id;
++---------+----------------------+----------+--------+------------+-------------+
+| loan_id | title                | name     | name   | loan_date  | return_date |
++---------+----------------------+----------+--------+------------+-------------+
+|       1 | En Iniya Iyanthira   | Karthik  | Geetha | 2025-06-25 | 2025-07-02  |
++---------+----------------------+----------+--------+------------+-------------+
+1 row in set (0.00 sec)
+
+mysql> select title, year_published from book where year_published > 2000;
++----------------------+----------------+
+| title                | year_published |
++----------------------+----------------+
+| En Iniya Iyanthira   |           2005 |
++----------------------+----------------+
+1 row in set (0.00 sec)
+
+mysql> select name, email from member where year(join_date) = 2023;
++----------+------------------------+
+| name     | email                  |
++----------+------------------------+
+| Karthik  | karthik123@email.com   |
++----------+------------------------+
+1 row in set (0.00 sec)
+
+mysql> select book.title, member.name, loan_date from loan
+    -> join book on loan.book_id = book.book_id
+    -> join member on loan.member_id = member.member_id
+    -> join staff on loan.staff_id = staff.staff_id
+    -> where lower(staff.name) = 'geetha';
++----------------------+----------+------------+
+| title                | name     | loan_date  |
++----------------------+----------+------------+
+| En Iniya Iyanthira   | Karthik  | 2025-06-25 |
++----------------------+----------+------------+
+1 row in set (0.00 sec)
+

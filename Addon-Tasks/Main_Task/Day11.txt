@@ -1,0 +1,69 @@
+mysql> CREATE TABLE Sales (
+    ->     SaleID INT AUTO_INCREMENT PRIMARY KEY,
+    ->     ProductName VARCHAR(100),
+    ->     Quantity INT,
+    ->     Price DECIMAL(10,2),
+    ->     SaleDate DATE,
+    ->     CustomerName VARCHAR(100),
+    ->     Region VARCHAR(50)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO Sales (ProductName, Quantity, Price, SaleDate, CustomerName, Region) VALUES
+    -> ('Laptop', 2, 1200.00, '2025-06-01', 'Kumar', 'Chennai'),
+    -> ('Laptop', 1, 1200.00, '2025-06-02', 'Arun', 'Madurai'),
+    -> ('Mouse', 5, 25.50, '2025-06-01', 'Kumar', 'Chennai'),
+    -> ('Monitor', 3, 300.00, '2025-06-03', 'Saravanan', 'Chennai'),
+    -> ('Keyboard', 2, 45.00, '2025-06-03', 'Ravi', 'Madurai'),
+    -> ('Laptop', 1, 1200.00, '2025-06-05', 'Sathish', 'Chennai');
+Query OK, 6 rows affected (0.04 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> SELECT
+    ->     ProductName,
+    ->     SUM(Quantity) AS TotalUnitsSold,
+    ->     SUM(Quantity * Price) AS TotalRevenue
+    -> FROM Sales
+    -> GROUP BY ProductName
+    -> ORDER BY TotalRevenue DESC;
++-------------+----------------+--------------+
+| ProductName | TotalUnitsSold | TotalRevenue |
++-------------+----------------+--------------+
+| Laptop      |              4 |      4800.00 |
+| Monitor     |              3 |       900.00 |
+| Mouse       |              5 |       127.50 |
+| Keyboard    |              2 |        90.00 |
++-------------+----------------+--------------+
+4 rows in set (0.03 sec)
+
+mysql> SELECT
+    ->     CustomerName,
+    ->     SUM(Quantity * Price) AS TotalSpent
+    -> FROM Sales
+    -> GROUP BY CustomerName
+    -> ORDER BY TotalSpent DESC;
++--------------+------------+
+| CustomerName | TotalSpent |
++--------------+------------+
+| Kumar        |    2527.50 |
+| Arun         |    1200.00 |
+| Sathish      |    1200.00 |
+| Saravanan    |     900.00 |
+| Ravi         |      90.00 |
++--------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT
+    ->     Region,
+    ->     COUNT(*) AS TotalOrders,
+    ->     SUM(Quantity * Price) AS RegionRevenue
+    -> FROM Sales
+    -> GROUP BY Region
+    -> ORDER BY RegionRevenue DESC;
++---------+-------------+---------------+
+| Region  | TotalOrders | RegionRevenue |
++---------+-------------+---------------+
+| Chennai |           4 |       4627.50 |
+| Madurai |           2 |       1290.00 |
++---------+-------------+---------------+
+2 rows in set (0.00 sec)

@@ -1,0 +1,47 @@
+mysql> create table student (
+    -> studentid int primary key,
+    -> studentname varchar(50)
+    -> );
+query ok, 0 rows affected (0.01 sec)
+
+mysql> create table course (
+    -> courseid varchar(10) primary key,
+    -> coursename varchar(50),
+    -> instructor varchar(50)
+    -> );
+query ok, 0 rows affected (0.01 sec)
+
+mysql> create table enrollment (
+    -> studentid int,
+    -> courseid varchar(10),
+    -> primary key (studentid, courseid),
+    -> foreign key (studentid) references student(studentid),
+    -> foreign key (courseid) references course(courseid)
+    -> );
+query ok, 0 rows affected (0.01 sec)
+
+mysql> desc student;
++------------+-------------+------+-----+---------+-------+
+| field      | type        | null | key | default | extra |
++------------+-------------+------+-----+---------+-------+
+| studentid  | int         | NO   | PRI | NULL    |       |
+| studentname| varchar(50) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+
+mysql> desc course;
++------------+-------------+------+-----+---------+-------+
+| field      | type        | null | key | default | extra |
++------------+-------------+------+-----+---------+-------+
+| courseid   | varchar(10) | NO   | PRI | NULL    |       |
+| coursename | varchar(50) | YES  |     | NULL    |       |
+| instructor | varchar(50) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+
+mysql> desc enrollment;
++-----------+-------------+------+-----+---------+-------+
+| field     | type        | null | key | default | extra |
++-----------+-------------+------+-----+---------+-------+
+| studentid | int         | NO   | PRI | NULL    |       |
+| courseid  | varchar(10) | NO   | PRI | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+

@@ -1,0 +1,4 @@
+Name,Total,Average
+Karthik Raja,240.0,80.00
+Divya Sri,259.0,86.33
+Arun Kumar,253.0,84.33

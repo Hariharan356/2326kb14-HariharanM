@@ -1,0 +1,41 @@
+mysql> create table department (
+    -> deptid int primary key,
+    -> deptname varchar(50)
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create table employee (
+    -> empid int primary key,
+    -> empname varchar(50),
+    -> salary int,
+    -> deptid int,
+    -> foreign key (deptid) references department(deptid)
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> insert into department values
+    -> (1, 'operations'),
+    -> (2, 'development'),
+    -> (3, 'accounts');
+Query OK, 3 rows affected (0.01 sec)
+
+mysql> insert into employee values
+    -> (101, 'Arun', 35000, 1),
+    -> (102, 'Kavya', 42000, 2),
+    -> (103, 'Meena', 39000, 2),
+    -> (104, 'Suresh', 41000, 3),
+    -> (105, 'Rithik', 37000, 1);
+Query OK, 5 rows affected (0.01 sec)
+
+mysql> select d.deptid, d.deptname, avg(e.salary) as average_salary
+    -> from department d
+    -> join employee e on d.deptid = e.deptid
+    -> group by d.deptid, d.deptname;
++--------+-------------+----------------+
+| deptid | deptname    | average_salary |
++--------+-------------+----------------+
+|      1 | operations  |        36000.0 |
+|      2 | development |        40500.0 |
+|      3 | accounts    |        41000.0 |
++--------+-------------+----------------+
+3 rows in set (0.00 sec)

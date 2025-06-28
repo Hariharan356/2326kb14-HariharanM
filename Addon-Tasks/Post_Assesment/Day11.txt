@@ -1,0 +1,55 @@
+mysql> create table employee (
+    -> emp_id int primary key,
+    -> emp_name varchar(50),
+    -> department varchar(30),
+    -> salary decimal(10,2)
+);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc employee;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| emp_id     | int          | NO   | PRI | NULL    |       |
+| emp_name   | varchar(50)  | YES  |     | NULL    |       |
+| department | varchar(30)  | YES  |     | NULL    |       |
+| salary     | decimal(10,2)| YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> insert into employee values
+    -> (201, 'Arun Kumar', 'hr', 45000.00),
+    -> (202, 'Divya Sri', 'it', 60000.00),
+    -> (203, 'Karthik R', 'finance', 55000.00),
+    -> (204, 'Harini M', 'it', 62000.00),
+    -> (205, 'Vignesh S', 'hr', 47000.00),
+    -> (206, 'Bala Murugan', 'finance', 53000.00);
+Query OK, 6 rows affected (0.01 sec)
+
+mysql> select * from employee;
++--------+--------------+------------+----------+
+| emp_id | emp_name     | department | salary   |
++--------+--------------+------------+----------+
+|    201 | Arun Kumar   | hr         | 45000.00 |
+|    202 | Divya Sri    | it         | 60000.00 |
+|    203 | Karthik R    | finance    | 55000.00 |
+|    204 | Harini M     | it         | 62000.00 |
+|    205 | Vignesh S    | hr         | 47000.00 |
+|    206 | Bala Murugan | finance    | 53000.00 |
++--------+--------------+------------+----------+
+6 rows in set (0.00 sec)
+
+mysql> select lower(department) as department,
+    -> count(*) as total_employees,
+    -> sum(salary) as total_salary,
+    -> avg(salary) as average_salary
+    -> from employee
+    -> group by lower(department);
++------------+------------------+--------------+----------------+
+| department | total_employees  | total_salary | average_salary |
++------------+------------------+--------------+----------------+
+| finance    |                2 |     108000.00|       54000.00 |
+| hr         |                2 |      92000.00|       46000.00 |
+| it         |                2 |     122000.00|       61000.00 |
++------------+------------------+--------------+----------------+
+3 rows in set (0.00 sec)

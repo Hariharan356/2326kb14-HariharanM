@@ -1,0 +1,106 @@
+mysql> create database college_registration;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use college_registration;
+Database changed
+
+mysql> create table department (
+    -> department_id int primary key auto_increment,
+    -> name varchar(50)
+);
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create table student (
+    -> student_id int primary key auto_increment,
+    -> name varchar(50),
+    -> email varchar(50) unique,
+    -> phone varchar(15),
+    -> department_id int,
+    -> foreign key (department_id) references department(department_id)
+);
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create table course (
+    -> course_id int primary key auto_increment,
+    -> course_name varchar(100),
+    -> credits int,
+    -> department_id int,
+    -> foreign key (department_id) references department(department_id)
+);
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create table registration (
+    -> registration_id int primary key auto_increment,
+    -> student_id int,
+    -> course_id int,
+    -> registration_date date,
+    -> foreign key (student_id) references student(student_id),
+    -> foreign key (course_id) references course(course_id)
+);
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> insert into department (name) values ('computer science'), ('commerce');
+Query OK, 2 rows affected (0.00 sec)
+
+mysql> insert into student (name, email, phone, department_id) values 
+    -> ('Arun', 'arunkumar@gmail.com', '9876543210', 1),
+    -> ('Divya', 'divya23@gmail.com', '9876501234', 2);
+Query OK, 2 rows affected (0.00 sec)
+
+mysql> insert into course (course_name, credits, department_id) values 
+    -> ('java programming', 4, 1),
+    -> ('accounting basics', 3, 2);
+Query OK, 2 rows affected (0.00 sec)
+
+mysql> insert into registration (student_id, course_id, registration_date) values 
+    -> (1, 1, '2025-06-15'),
+    -> (2, 2, '2025-06-16');
+Query OK, 2 rows affected (0.00 sec)
+
+mysql> select * from department;
++---------------+------------------+
+| department_id | name             |
++---------------+------------------+
+|             1 | computer science |
+|             2 | commerce         |
++---------------+------------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from student;
++------------+--------+------------------------+-------------+---------------+
+| student_id | name   | email                  | phone       | department_id |
++------------+--------+------------------------+-------------+---------------+
+|          1 | Arun   | arunkumar@gmail.com    | 9876543210  |             1 |
+|          2 | Divya  | divya23@gmail.com      | 9876501234  |             2 |
++------------+--------+------------------------+-------------+---------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from course;
++-----------+-------------------+---------+---------------+
+| course_id | course_name       | credits | department_id |
++-----------+-------------------+---------+---------------+
+|         1 | java programming  |       4 |             1 |
+|         2 | accounting basics |       3 |             2 |
++-----------+-------------------+---------+---------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from registration;
++------------------+------------+-----------+------------------+
+| registration_id  | student_id | course_id | registration_date|
++------------------+------------+-----------+------------------+
+|                1 |          1 |         1 | 2025-06-15       |
+|                2 |          2 |         2 | 2025-06-16       |
++------------------+------------+-----------+------------------+
+2 rows in set (0.00 sec)
+
+mysql> select student.name, course.course_name, registration.registration_date
+    -> from registration
+    -> join student on registration.student_id = student.student_id
+    -> join course on registration.course_id = course.course_id;
++--------+-------------------+------------------+
+| name   | course_name       | registration_date|
++--------+-------------------+------------------+
+| Arun   | java programming  | 2025-06-15       |
+| Divya  | accounting basics | 2025-06-16       |
++--------+-------------------+------------------+
+2 rows in set (0.00 sec)

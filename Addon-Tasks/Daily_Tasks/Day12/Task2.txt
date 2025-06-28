@@ -1,0 +1,21 @@
+mysql> select s.studentid, s.studentname, total_score
+    -> from (
+    ->     select studentid, sum(score) as total_score
+    ->     from marks
+    ->     group by studentid
+    -> ) as t
+    -> join student s on s.studentid = t.studentid
+    -> where total_score = (
+    ->     select max(total_score)
+    ->     from (
+    ->         select studentid, sum(score) as total_score
+    ->         from marks
+    ->         group by studentid
+    ->     ) as scores
+    -> );
++-----------+-------------+-------------+
+| studentid | studentname | total_score |
++-----------+-------------+-------------+
+|         3 | Rahul       |         159 |
++-----------+-------------+-------------+
+1 row in set (0.00 sec)

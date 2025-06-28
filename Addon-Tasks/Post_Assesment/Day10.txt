@@ -1,0 +1,47 @@
+mysql> create table customer (
+    -> customer_id int primary key,
+    -> customer_name varchar(50),
+    -> city varchar(30),
+    -> email varchar(50)
+);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc customer;
++---------------+--------------+------+-----+---------+-------+
+| Field         | Type         | Null | Key | Default | Extra |
++---------------+--------------+------+-----+---------+-------+
+| customer_id   | int          | NO   | PRI | NULL    |       |
+| customer_name | varchar(50)  | YES  |     | NULL    |       |
+| city          | varchar(30)  | YES  |     | NULL    |       |
+| email         | varchar(50)  | YES  |     | NULL    |       |
++---------------+--------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> insert into customer values
+    -> (101, 'Arun Kumar', 'chennai', 'arunkumar123@gmail.com'),
+    -> (102, 'Divya Sri', 'coimbatore', 'divyasri@yahoo.com'),
+    -> (103, 'Karthik R', 'madurai', 'karthikr.official@hotmail.com'),
+    -> (104, 'Harini M', 'chennai', 'harinimani@gmail.com'),
+    -> (105, 'Vignesh S', 'salem', 'vigneshs@outlook.com');
+Query OK, 5 rows affected (0.01 sec)
+
+mysql> select * from customer;
++-------------+--------------+-------------+----------------------------+
+| customer_id | customer_name | city       | email                      |
++-------------+--------------+-------------+----------------------------+
+|         101 | Arun Kumar    | chennai    | arunkumar123@gmail.com     |
+|         102 | Divya Sri     | coimbatore | divyasri@yahoo.com         |
+|         103 | Karthik R     | madurai    | karthikr.official@hotmail.com |
+|         104 | Harini M      | chennai    | harinimani@gmail.com       |
+|         105 | Vignesh S     | salem      | vigneshs@outlook.com       |
++-------------+--------------+-------------+----------------------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from customer where lower(city) = 'chennai';
++-------------+--------------+---------+----------------------------+
+| customer_id | customer_name | city   | email                      |
++-------------+--------------+---------+----------------------------+
+|         101 | Arun Kumar    | chennai| arunkumar123@gmail.com     |
+|         104 | Harini M      | chennai| harinimani@gmail.com       |
++-------------+--------------+---------+----------------------------+
+2 rows in set (0.00 sec)

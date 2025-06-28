@@ -1,0 +1,3 @@
+Arun Kumar, 85, 90, 78
+Divya Sri, 92, 88, 79
+Karthik Raja, 75, 80, 85

@@ -1,0 +1,118 @@
+mysql> create table book (
+    -> bookid int primary key,
+    -> title varchar(100),
+    -> author varchar(50),
+    -> price int
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc book;
++--------+--------------+------+-----+---------+-------+
+| field  | type         | null | key | default | extra |
++--------+--------------+------+-----+---------+-------+
+| bookid | int          | NO   | PRI | NULL    |       |
+| title  | varchar(100) | YES  |     | NULL    |       |
+| author | varchar(50)  | YES  |     | NULL    |       |
+| price  | int          | YES  |     | NULL    |       |
++--------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> create table member (
+    -> memberid int primary key,
+    -> name varchar(50),
+    -> city varchar(50)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc member;
++----------+--------------+------+-----+---------+-------+
+| field    | type         | null | key | default | extra |
++----------+--------------+------+-----+---------+-------+
+| memberid | int          | NO   | PRI | NULL    |       |
+| name     | varchar(50)  | YES  |     | NULL    |       |
+| city     | varchar(50)  | YES  |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> create table issue (
+    -> issueid int primary key,
+    -> bookid int,
+    -> memberid int,
+    -> issuedate date,
+    -> returndate date,
+    -> foreign key (bookid) references book(bookid),
+    -> foreign key (memberid) references member(memberid)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc issue;
++-----------+------------+------+-----+---------+-------+
+| field     | type       | null | key | default | extra |
++-----------+------------+------+-----+---------+-------+
+| issueid   | int        | NO   | PRI | NULL    |       |
+| bookid    | int        | YES  | MUL | NULL    |       |
+| memberid  | int        | YES  | MUL | NULL    |       |
+| issuedate | date       | YES  |     | NULL    |       |
+| returndate| date       | YES  |     | NULL    |       |
++-----------+------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> insert into book values
+    -> (1, 'java basics', 'Arjun', 400),
+    -> (2, 'dbms concepts', 'Kaviya', 350),
+    -> (3, 'data structures', 'Vignesh', 450),
+    -> (4, 'networking', 'Hari', 300),
+    -> (5, 'python made easy', 'Rithvik', 500);
+Query OK, 5 rows affected (0.01 sec)
+
+mysql> insert into member values
+    -> (101, 'Karthik', 'Chennai'),
+    -> (102, 'Deepika', 'Madurai'),
+    -> (103, 'Naveen', 'Trichy'),
+    -> (104, 'Anitha', 'Coimbatore'),
+    -> (105, 'Aravindh', 'Salem');
+Query OK, 5 rows affected (0.01 sec)
+
+mysql> insert into issue values
+    -> (201, 1, 101, '2025-06-01', '2025-06-10'),
+    -> (202, 2, 102, '2025-06-05', '2025-06-15'),
+    -> (203, 3, 103, '2025-06-10', '2025-06-20'),
+    -> (204, 5, 104, '2025-06-15', '2025-06-25'),
+    -> (205, 4, 105, '2025-06-20', '2025-06-30');
+Query OK, 5 rows affected (0.01 sec)
+
+mysql> select * from book;
++--------+-------------------+----------+-------+
+| bookid | title             | author   | price |
++--------+-------------------+----------+-------+
+|      1 | java basics       | Arjun    |   400 |
+|      2 | dbms concepts     | Kaviya   |   350 |
+|      3 | data structures   | Vignesh  |   450 |
+|      4 | networking        | Hari     |   300 |
+|      5 | python made easy  | Rithvik  |   500 |
++--------+-------------------+----------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from member;
++----------+-----------+--------------+
+| memberid | name      | city         |
++----------+-----------+--------------+
+|      101 | Karthik   | Chennai      |
+|      102 | Deepika   | Madurai      |
+|      103 | Naveen    | Trichy       |
+|      104 | Anitha    | Coimbatore   |
+|      105 | Aravindh  | Salem        |
++----------+-----------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from issue;
++---------+--------+----------+------------+-------------+
+| issueid | bookid | memberid | issuedate  | returndate  |
++---------+--------+----------+------------+-------------+
+|     201 |      1 |      101 | 2025-06-01 | 2025-06-10  |
+|     202 |      2 |      102 | 2025-06-05 | 2025-06-15  |
+|     203 |      3 |      103 | 2025-06-10 | 2025-06-20  |
+|     204 |      5 |      104 | 2025-06-15 | 2025-06-25  |
+|     205 |      4 |      105 | 2025-06-20 | 2025-06-30  |
++---------+--------+----------+------------+-------------+
+5 rows in set (0.00 sec)

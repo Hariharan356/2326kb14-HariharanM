@@ -1,0 +1,78 @@
+mysql> create table course (
+    -> courseid int primary key,
+    -> coursename varchar(50),
+    -> duration varchar(20)
+    -> );
+query ok, 0 rows affected (0.02 sec)
+
+mysql> desc course;
++-----------+--------------+------+-----+---------+-------+
+| field     | type         | null | key | default | extra |
++-----------+--------------+------+-----+---------+-------+
+| courseid  | int          | NO   | PRI | NULL    |       |
+| coursename| varchar(50)  | YES  |     | NULL    |       |
+| duration  | varchar(20)  | YES  |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> create table student (
+    -> studentid int primary key,
+    -> studentname varchar(50),
+    -> marks int,
+    -> courseid int,
+    -> foreign key (courseid) references course(courseid)
+    -> );
+query ok, 0 rows affected (0.03 sec)
+
+mysql> desc student;
++------------+--------------+------+-----+---------+-------+
+| field      | type         | null | key | default | extra |
++------------+--------------+------+-----+---------+-------+
+| studentid  | int          | NO   | PRI | NULL    |       |
+| studentname| varchar(50)  | YES  |     | NULL    |       |
+| marks      | int          | YES  |     | NULL    |       |
+| courseid   | int          | YES  | MUL | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into course values (101, 'Artificial Intelligence', '3 years');
+query ok, 1 row affected (0.01 sec)
+
+mysql> insert into course values (102, 'Cyber Security', '3 years');
+query ok, 1 row affected (0.01 sec)
+
+mysql> insert into course values (103, 'Data Analytics', '4 years');
+query ok, 1 row affected (0.01 sec)
+
+mysql> insert into student values (1, 'Arun', 82, 101);
+query ok, 1 row affected (0.01 sec)
+
+mysql> insert into student values (2, 'Divya', 89, 102);
+query ok, 1 row affected (0.01 sec)
+
+mysql> insert into student values (3, 'Karthik', 76, 103);
+query ok, 1 row affected (0.01 sec)
+
+mysql> insert into student values (4, 'Bharathi', 91, 101);
+query ok, 1 row affected (0.01 sec)
+
+mysql> select * from course;
++----------+------------------------+----------+
+| courseid | coursename             | duration |
++----------+------------------------+----------+
+|      101 | Artificial Intelligence| 3 years  |
+|      102 | Cyber Security         | 3 years  |
+|      103 | Data Analytics         | 4 years  |
++----------+------------------------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from student;
++-----------+--------------+-------+----------+
+| studentid | studentname  | marks | courseid |
++-----------+--------------+-------+----------+
+|         1 | Arun         |    82 |      101 |
+|         2 | Divya        |    89 |      102 |
+|         3 | Karthik      |    76 |      103 |
+|         4 | Bharathi     |    91 |      101 |
++-----------+--------------+-------+----------+
+4 rows in set (0.00 sec)

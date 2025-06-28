@@ -1,0 +1,27 @@
+mysql> create table course (
+    -> courseid int primary key,
+    -> coursename varchar(50),
+    -> duration varchar(20),
+    -> fee int
+    -> );
+query ok, 0 rows affected (0.01 sec)
+
+mysql> insert into course values
+    -> (101, 'computer technology', '3 years', 50000),
+    -> (102, 'information technology', '3 years', 40000),
+    -> (103, 'system software', '4 years', 45000),
+    -> (104, 'mechanical engineering', '4 years', 47000),
+    -> (105, 'electronics', '4 years', 42000);
+query ok, 5 rows affected (0.01 sec)
+
+mysql> select * from course order by fee asc;
++----------+-------------------------+----------+--------+
+| courseid | coursename              | duration | fee    |
++----------+-------------------------+----------+--------+
+|      102 | information technology  | 3 years  | 40000  |
+|      105 | electronics             | 4 years  | 42000  |
+|      103 | system software         | 4 years  | 45000  |
+|      104 | mechanical engineering  | 4 years  | 47000  |
+|      101 | computer technology     | 3 years  | 50000  |
++----------+-------------------------+----------+--------+
+5 rows in set (0.00 sec)

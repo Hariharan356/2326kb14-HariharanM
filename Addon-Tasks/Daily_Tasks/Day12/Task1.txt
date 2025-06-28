@@ -1,0 +1,42 @@
+mysql> create table student (
+    -> studentid int primary key,
+    -> studentname varchar(50)
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create table marks (
+    -> markid int primary key,
+    -> studentid int,
+    -> subject varchar(50),
+    -> score int,
+    -> foreign key (studentid) references student(studentid)
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> insert into student values
+    -> (1, 'Karthik'),
+    -> (2, 'Divya'),
+    -> (3, 'Rahul');
+Query OK, 3 rows affected (0.01 sec)
+
+mysql> insert into marks values
+    -> (101, 1, 'maths', 76),
+    -> (102, 1, 'science', 89),
+    -> (103, 2, 'tamil', 83),
+    -> (104, 3, 'science', 91),
+    -> (105, 3, 'english', 68);
+Query OK, 5 rows affected (0.01 sec)
+
+mysql> select s.studentid, s.studentname, m.subject, m.score
+    -> from student s
+    -> join marks m on s.studentid = m.studentid;
++-----------+-------------+----------+-------+
+| studentid | studentname | subject  | score |
++-----------+-------------+----------+-------+
+|         1 | Karthik     | maths    |    76 |
+|         1 | Karthik     | science  |    89 |
+|         2 | Divya       | tamil    |    83 |
+|         3 | Rahul       | science  |    91 |
+|         3 | Rahul       | english  |    68 |
++-----------+-------------+----------+-------+
+5 rows in set (0.00 sec)
