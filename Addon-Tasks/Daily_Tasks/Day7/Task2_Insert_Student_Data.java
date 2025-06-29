@@ -26,7 +26,7 @@ public class Task2_Insert_Student_Data {
     public static void main(String[] args) {
         String url = "jdbc:mysql://localhost:3306/school"; // DB name: school
         String user = "root";
-        String password = "Danish8072"; // 🔁 Replace with your actual MySQL password
+        String password = "Hari@123"; // 🔁 Replace with your actual MySQL password
 
         Connection conn = null;
         PreparedStatement stmt = null;
