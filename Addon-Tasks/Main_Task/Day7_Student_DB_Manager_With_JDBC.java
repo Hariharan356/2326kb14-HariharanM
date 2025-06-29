@@ -22,7 +22,7 @@ public class Day7_Student_DB_Manager_With_JDBC {
 
     static final String URL = "jdbc:mysql://localhost:3306/school";
     static final String USER = "root";
-    static final String PASSWORD = "Danish8072"; // Replace with your MySQL password
+    static final String PASSWORD = "Hari@123"; // Replace with your MySQL password
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
